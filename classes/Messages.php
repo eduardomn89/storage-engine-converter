@@ -6,19 +6,19 @@
 
 			if($type === 'success'){
 		
-				$class = 'alert alert-success';
+				$class = 'msg success-msg';
 		
 			}else if($type === 'error'){
 		
-				$class = 'alert alert-error';
+				$class = 'msg error-msg';
 		
-			}else if($type === 'info'){
+			}else if($type === 'info' || $type === 'no-data'){
 		
-				$class = 'alert alert-info';
+				$class = 'msg info-msg';
 		
 			}else{
 
-				$class = 'alert';
+				$class = 'msg';
 			
 			}
 		
@@ -82,7 +82,7 @@
 
     	public static function success_msg($message){
 
-			return "<div class='alert alert-success'>	
+			return "<div class='msg success-msg'>	
 						$message						
 					</div>";
 					
@@ -90,7 +90,7 @@
 
     	public static function warning_msg($message){
 
-			return "<div class='alert alert-warning'>	
+			return "<div class='msg warning-msg'>	
 						$message						
 					</div>";
 					
@@ -98,7 +98,7 @@
 
     	public static function danger_msg($message){
 
-			return "<div class='alert alert-error'>	
+			return "<div class='msg error-msg'>	
 						$message						
 					</div>";
 					
@@ -106,7 +106,7 @@
 
     	public static function info_msg($message){
 
-			return "<div class='alert alert-info'>	
+			return "<div class='msg info-msg'>	
 						$message						
 					</div>";
 					

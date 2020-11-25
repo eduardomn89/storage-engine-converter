@@ -1,4 +1,7 @@
-.change-engineForm{
+.description-wrap{
+	text-align: justify;
+}
+.engine-form{
 	background: #F9F9FA;
 	border: solid 1px #BEBEBF;
 	display: flex;
@@ -6,10 +9,14 @@
 }
 .engine-name, .db-name{
 	border: solid 1px #BEBEBF;
-	width: 200px;
-	height: 30px;
+	cursor: pointer;
+	font-size: 110%;
+	width: 300px;
+	height: 40px;
 }
 .change-btn{
 	background: #4B8BF4;
 	cursor: pointer;
+	width: 150px;
+	height: 40px;
 }

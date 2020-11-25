@@ -9,21 +9,11 @@
 		}
 
 		public function get_queries_engineChange($db = '', $e1 = '', $e2 = ''){
-
-			/*se selecciona el nombre de las tablas de la db y con concat() se eleboran 
-			las consultas para hacer la modificacion del engine de cada una de las tablas.*/
-
-			/*$query = $this -> multiquery("SET @DATABASE_NAME = '$db'; 
-										  SELECT CONCAT('ALTER TABLE `', table_name, '` ENGINE=$e1;') AS sql_statements, 
-										  TABLE_NAME FROM information_schema.TABLES AS tb WHERE ENGINE='$e2' AND table_schema = '$db' and TABLE_TYPE = 'BASE TABLE'; ", 
-										'Consulta elaborada exitosamente',
-										'No se encontraron datos para elaborar la consulta',
-										'Error al elaborar la consulta');*/
  
 			$query = $this -> crud("SELECT CONCAT('ALTER TABLE',' ',table_name,' ','ENGINE=$e1;') AS sql_statements, TABLE_NAME from information_schema.TABLES AS tb WHERE ENGINE='$e2' AND table_schema = '$db' AND TABLE_TYPE = 'BASE TABLE'", 
-										'Consulta elaborada exitosamente',
-										'No se encontraron datos para elaborar la consulta',
-										'Error al elaborar la consulta');
+								   'Consulta elaborada exitosamente',
+								   'No se encontraron datos para elaborar la consulta',
+								   'Error al elaborar la consulta');
 		
 			return $query;
 
