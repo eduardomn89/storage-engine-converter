@@ -9,12 +9,20 @@
 		}
 
 		public function get_queries_engineChange($db = '', $e1 = '', $e2 = ''){
- 
+ 			
+ 			/*generar los strings de las consultas para modificacion de motor de almacenamiento
+ 			la sentencia para modificar el motor de almacenamiento es ALTER TABLE nombre de tabla a modificar ENGINE = tipo de motor 
+ 			con la consulta select se seleccionan las tablas que tengan el motor a modificar
+ 			la condicion es que busque las que tengan el tipo de motor, que pertenescan a la base de datos seleccionada
+ 			y que el table_type sea base table
+ 			con concat se guardara en sql_statements la consulta alter table de cada tabla que se encuentre
+ 			la consulta devolvera un array y en la clave sql_statements estaran las consultas alter table de cada una de las tablas encontradas*/
+
 			$query = $this -> crud("SELECT CONCAT('ALTER TABLE',' ',table_name,' ','ENGINE=$e1;') AS sql_statements, TABLE_NAME from information_schema.TABLES AS tb WHERE ENGINE='$e2' AND table_schema = '$db' AND TABLE_TYPE = 'BASE TABLE'", 
 								   'Consulta elaborada exitosamente',
 								   'No se encontraron datos para elaborar la consulta',
 								   'Error al elaborar la consulta');
-		
+
 			return $query;
 
 		}
@@ -66,11 +74,11 @@
 					if($query['status'] == 'done'){
 
 						$numRows = mysqli_num_rows($query['data']);//obtener el numero de consultas
-			
+						echo $numRows;
 						if($numRows > 0){
-							
+
 							while($row = mysqli_fetch_assoc($query['data'])){
-									
+																
 								$sql .= $row['sql_statements'];//elaborar consulta multiple
 								$tablesName[$count-1] = $row['TABLE_NAME'];//almacenar nombre de tablas
 								$count++;
@@ -112,13 +120,13 @@
 
 								//si hubo un error llega aqui
 
-								$foreignKeys = '';//almacena el constarnt y el nombre de la tabla en la que se removera foreign key
+								$foreignKeys = '';//almacena el constraint y el nombre de la tabla en la que se removera foreign key
 
 								$change['notice'] = '';
 
 								for($i = 0; $i < count($tablesName); $i++){
 
-									//obtener todos los foreign key y nombre de la tabla a la que se le removera
+									//obtener todas las foreign key y nombre de la tabla a la que se le removera
 									$getForeignKey = $this -> get_foreign_key($tablesName[$i]);
 
 									if($getForeignKey['status'] == 'done'){
@@ -138,7 +146,7 @@
 									$this -> db = $db;
 									
 									$this -> connect();
-									print_r($getForeignKey);
+
 									$change = $this -> multiquery($foreignKeys,
 																  'Foreign keys eliminadas exitosamente',
 																  'No se encontraron foreign keys para eliminar',
